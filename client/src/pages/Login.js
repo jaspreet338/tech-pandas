@@ -9,8 +9,8 @@ import React, { useState } from "react";
     console.log(email);
   };
   return (
-		<>
-			<form onSubmit={handleSubmit}>
+		<div className="form-container">
+			<form className="login-form" onSubmit={handleSubmit}>
 				<label htmlFor="email">email</label>
 				<input
 					value={email}
@@ -31,8 +31,8 @@ import React, { useState } from "react";
 				/>
 				<button type="submit">Log In</button>
 			</form>
-			<button>Not have an account? Register here.</button>
-		</>
+			<button className="link-btn">Not have an account? Register here.</button>
+		</div>
 	);
 };
 
