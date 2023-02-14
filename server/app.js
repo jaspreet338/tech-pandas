@@ -1,32 +1,71 @@
-import express from "express";
+import React, { useState } from "react";
 
-import apiRouter from "./api";
-import config from "./utils/config";
-import {
-	clientRouter,
-	configuredHelmet,
-	configuredMorgan,
-	httpsOnly,
-	logErrors,
-} from "./utils/middleware";
+const RegisterForm = () => {
+	const [formData, setFormData] = useState({
+		username: "",
+		email: "",
+		password: "",
+		passwordConfirm: "",
+	});
 
-const apiRoot = "/api";
+	const handleInputChange = (event) => {
+		setFormData({
+			...formData,
+			[event.target.name]: event.target.value,
+		});
+	};
 
-const app = express();
+	const handleSubmit = (event) => {
+		event.preventDefault();
+		console.log(formData);
+		// Your code to submit form data to the server
+	};
 
-app.use(express.json());
-app.use(configuredHelmet());
-app.use(configuredMorgan());
+	return (
+		<form onSubmit={handleSubmit}>
+			<div>
+				<label htmlFor="username">Username:</label>
+				<input
+					type="text"
+					id="username"
+					name="username"
+					value={formData.username}
+					onChange={handleInputChange}
+				/>
+			</div>
+			<div>
+				<label htmlFor="email">Email:</label>
+				<input
+					type="email"
+					id="email"
+					name="email"
+					value={formData.email}
+					onChange={handleInputChange}
+				/>
+			</div>
+			<div>
+				<label htmlFor="password">Password:</label>
+				<input
+					type="password"
+					id="password"
+					name="password"
+					value={formData.password}
+					onChange={handleInputChange}
+				/>
+			</div>
+			<div>
+				<label htmlFor="passwordConfirm">Confirm Password:</label>
+				<input
+					type="password"
+					id="passwordConfirm"
+					name="passwordConfirm"
+					value={formData.passwordConfirm}
+					onChange={handleInputChange}
+				/>
+			</div>
+			<button type="submit">Register</button>
+		</form>
+	);
+};
 
-if (config.production) {
-	app.enable("trust proxy");
-	app.use(httpsOnly());
-}
-
-app.use(apiRoot, apiRouter);
-app.use("/health", (_, res) => res.sendStatus(200));
-app.use(clientRouter(apiRoot));
-
-app.use(logErrors());
-
-export default app;
+export default RegisterForm;
