@@ -1,5 +1,6 @@
 import { Router } from "express";
 
+
 import logger from "./utils/logger";
 
 const router = Router();
@@ -7,6 +8,9 @@ const router = Router();
 router.get("/", (_, res) => {
 	logger.debug("Welcoming everyone...");
 	res.json({ message: "Hello, world!" });
+
 });
+
+router.use("/auth", require("./routes/auth"));
 
 export default router;
